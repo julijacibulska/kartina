@@ -47,7 +47,7 @@
     banner.id = "cookie-banner";
     banner.className = "cookie-banner";
     banner.setAttribute("role", "dialog");
-    banner.setAttribute("aria-label", "Cookie consent");
+    banner.setAttribute("aria-label", "Sīkdatņu piekrišana");
     banner.setAttribute("aria-live", "polite");
 
     var inner = document.createElement("div");
@@ -56,13 +56,13 @@
     var p = document.createElement("p");
     var linkCookies = document.createElement("a");
     linkCookies.href = "cookies.html";
-    linkCookies.textContent = "Cookie policy";
+    linkCookies.textContent = "Sīkdatņu politika";
     var linkPrivacy = document.createElement("a");
     linkPrivacy.href = "privacy.html";
-    linkPrivacy.textContent = "Privacy policy";
+    linkPrivacy.textContent = "Privātuma politika";
     p.appendChild(
       document.createTextNode(
-        "Accept to view the barcode and allow advertising cookies (e.g. Google AdSense). We store your choice locally. "
+        "Pieņemiet, lai redzētu svītrkodu un atļautu reklāmu sīkdatnes (piem., Google AdSense). Jūsu izvēli saglabājam lokāli. "
       )
     );
     p.appendChild(linkCookies);
@@ -76,19 +76,19 @@
     acceptBtn.type = "button";
     acceptBtn.className = "cookie-btn cookie-btn-accept";
     acceptBtn.id = "cookie-accept";
-    acceptBtn.textContent = "Accept all";
+    acceptBtn.textContent = "Pieņemt visas";
 
     var rejectBtn = document.createElement("button");
     rejectBtn.type = "button";
     rejectBtn.className = "cookie-btn cookie-btn-reject";
     rejectBtn.id = "cookie-reject";
-    rejectBtn.textContent = "Reject non-essential";
+    rejectBtn.textContent = "Noraidīt nebūtiskās";
 
     var settingsBtn = document.createElement("button");
     settingsBtn.type = "button";
     settingsBtn.className = "cookie-btn cookie-btn-settings";
     settingsBtn.id = "cookie-settings";
-    settingsBtn.textContent = "Change cookie choice";
+    settingsBtn.textContent = "Mainīt izvēli";
 
     actions.appendChild(acceptBtn);
     actions.appendChild(rejectBtn);
