@@ -134,7 +134,9 @@
   function loadAdvertisingIfConfigured() {
     if (!hasAdConsent()) return;
     var cfg = window.kartinaAdConfig;
-    if (!cfg || !cfg.client) return;
+    if (!cfg || !cfg.client || /X{4,}/.test(cfg.client)) return;
+
+    if (document.querySelector('script[src*="adsbygoogle.js"]')) return;
 
     var script = document.createElement("script");
     script.async = true;
@@ -144,17 +146,21 @@
     script.crossOrigin = "anonymous";
     script.onload = function () {
       var slot = document.getElementById("ad-slot");
-      if (!slot || !cfg.slot) return;
+      if (!slot) return;
       var placeholder = slot.querySelector(".ad-placeholder");
       if (placeholder) placeholder.remove();
-      var ins = document.createElement("ins");
-      ins.className = "adsbygoogle";
-      ins.style.display = "block";
-      ins.setAttribute("data-ad-client", cfg.client);
-      ins.setAttribute("data-ad-slot", cfg.slot);
-      ins.setAttribute("data-ad-format", "auto");
-      ins.setAttribute("data-full-width-responsive", "true");
-      slot.appendChild(ins);
+
+      if (cfg.slot && !/X{4,}/.test(String(cfg.slot))) {
+        var ins = document.createElement("ins");
+        ins.className = "adsbygoogle";
+        ins.style.display = "block";
+        ins.setAttribute("data-ad-client", cfg.client);
+        ins.setAttribute("data-ad-slot", String(cfg.slot));
+        ins.setAttribute("data-ad-format", "auto");
+        ins.setAttribute("data-full-width-responsive", "true");
+        slot.appendChild(ins);
+      }
+
       (window.adsbygoogle = window.adsbygoogle || []).push({});
     };
     document.head.appendChild(script);
