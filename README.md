@@ -1,11 +1,13 @@
-# Barcode + ad landing page
+# kartina — barcode + ad landing page
 
 Mobile-first static site: one scannable barcode image and a single footer ad slot. No backend required.
+
+**Repository:** https://github.com/julijacibulska/kartina
 
 ## Local preview
 
 ```bash
-cd barcode-ad-site
+cd /Users/julija/barcode-ad-site
 python3 -m http.server 8080
 ```
 
@@ -19,21 +21,18 @@ Open http://localhost:8080 on your phone (same Wi‑Fi) or use browser dev tools
 
 ## Deploy to GitHub Pages (free)
 
-1. Create a new GitHub repository.
-2. Push this folder:
+1. Push to GitHub (see [PUSH.md](PUSH.md) if you have not pushed yet):
 
    ```bash
-   cd barcode-ad-site
-   git add .
-   git commit -m "Initial static barcode landing page"
-   git remote add origin git@github.com:YOUR_USER/YOUR_REPO.git
+   cd /Users/julija/barcode-ad-site
+   git remote add origin https://github.com/julijacibulska/kartina.git
    git push -u origin main
    ```
 
-3. On GitHub: **Settings → Pages → Build and deployment**
+2. On GitHub: **Settings → Pages → Build and deployment**
    - Source: **Deploy from a branch**
    - Branch: `main` / `/ (root)`
-4. After a minute, the site is live at `https://YOUR_USER.github.io/YOUR_REPO/`.
+3. After a minute, the site is live at **https://julijacibulska.github.io/kartina/**.
 
 ### Custom domain (recommended for AdSense)
 
