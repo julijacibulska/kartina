@@ -44,13 +44,18 @@ html:not([data-consent="all"]) #ad-section {
 }
 
 .barcode-stage {
-  position: relative;
+  display: grid;
   width: 100%;
+  max-width: 360px;
+  margin: 0 auto;
   flex: 1 1 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: min(55dvh, 380px);
+  align-content: center;
+}
+
+.barcode-stage > .barcode-content,
+.barcode-stage > .consent-gate-overlay {
+  grid-area: 1 / 1;
+  width: 100%;
 }
 
 /* Blur barcode until cookies accepted */
@@ -68,18 +73,23 @@ html:not([data-consent="all"]) .barcode-stage .about {
 }
 
 .consent-gate-overlay {
-  position: absolute;
-  inset: 0;
   z-index: 2;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  text-align: center;
-  padding: 1.25rem;
-  background: rgba(15, 15, 15, 0.72);
+  align-self: stretch;
+  justify-self: stretch;
+  min-height: 100%;
+  padding: 1rem;
+  background: rgba(15, 15, 15, 0.75);
   backdrop-filter: blur(2px);
   -webkit-backdrop-filter: blur(2px);
+}
+
+.consent-gate-panel {
+  width: 100%;
+  max-width: 20rem;
+  text-align: center;
 }
 
 html[data-consent="all"] .consent-gate-overlay {
@@ -106,6 +116,7 @@ html[data-consent="all"] .consent-gate-overlay {
   gap: 0.5rem;
   width: 100%;
   max-width: 16rem;
+  margin: 0 auto;
 }
 
 .consent-gate-title {
@@ -116,10 +127,11 @@ html[data-consent="all"] .consent-gate-overlay {
 }
 
 .consent-gate-text {
-  margin: 0 0 1.25rem;
-  max-width: 20rem;
+  margin: 0 auto 1.25rem;
+  max-width: 18rem;
   font-size: 0.875rem;
-  color: #888;
+  line-height: 1.45;
+  color: #aaa;
 }
 
 .consent-gate-actions .cookie-btn {
