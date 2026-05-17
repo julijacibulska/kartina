@@ -29,40 +29,47 @@
   <body>
     <div class="page">
       <main class="content" id="main">
-        <div id="consent-gate-message" class="consent-gate-message">
-          <p id="gate-title" class="consent-gate-title">Svītrkods nav redzams</p>
-          <p id="gate-text" class="consent-gate-text">
-            Lai redzētu svītrkodu, lūdzu pieņemiet sīkdatnes.
-          </p>
-          <div class="consent-gate-actions">
-            <button type="button" class="cookie-btn cookie-btn-accept" data-cookie-accept>
-              Pieņemt visas
-            </button>
-            <button type="button" class="cookie-btn cookie-btn-reject" data-cookie-reject>
-              Noraidīt nebūtiskās
-            </button>
+        <div class="barcode-stage">
+          <div id="barcode-content" class="barcode-content">
+            <figure class="barcode-wrap">
+              <img
+                class="barcode"
+                src="assets/barcode.svg"
+                alt="Skenējams svītrkods"
+                width="320"
+                height="320"
+                loading="eager"
+                decoding="async"
+              />
+            </figure>
+            <p class="hint">Skenējiet ar tālruņa kameru</p>
+            <p class="about">Parādiet šo svītrkodu kasierim, veicot pirkumu</p>
           </div>
-          <p class="consent-gate-links">
-            <a href="cookies.html">Sīkdatņu politika</a>
-            <span aria-hidden="true"> · </span>
-            <a href="privacy.html">Privātuma politika</a>
-          </p>
-        </div>
 
-        <div id="barcode-content" class="barcode-content">
-          <figure class="barcode-wrap">
-            <img
-              class="barcode"
-              src="assets/barcode.svg"
-              alt="Skenējams svītrkods"
-              width="320"
-              height="320"
-              loading="lazy"
-              decoding="async"
-            />
-          </figure>
-          <p class="hint">Skenējiet ar tālruņa kameru</p>
-          <p class="about">Parādiet šo svītrkodu kasierim, veicot pirkumu</p>
+          <div
+            id="consent-gate-message"
+            class="consent-gate-overlay"
+            role="dialog"
+            aria-labelledby="gate-title"
+          >
+            <p id="gate-title" class="consent-gate-title">Svītrkods ir aizsargāts</p>
+            <p id="gate-text" class="consent-gate-text">
+              Lai skaidri redzētu svītrkodu, lūdzu pieņemiet sīkdatnes.
+            </p>
+            <div class="consent-gate-actions">
+              <button type="button" class="cookie-btn cookie-btn-accept" data-cookie-accept>
+                Pieņemt visas
+              </button>
+              <button type="button" class="cookie-btn cookie-btn-reject" data-cookie-reject>
+                Noraidīt nebūtiskās
+              </button>
+            </div>
+            <p class="consent-gate-links">
+              <a href="cookies.html">Sīkdatņu politika</a>
+              <span aria-hidden="true"> · </span>
+              <a href="privacy.html">Privātuma politika</a>
+            </p>
+          </div>
         </div>
       </main>
 
