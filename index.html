@@ -30,13 +30,32 @@
     <div class="page">
       <main class="content" id="main">
         <div id="consent-gate-message" class="consent-gate-message">
-          <p class="consent-gate-title">Barcode locked</p>
-          <p class="consent-gate-text">
-            Accept cookies to view the barcode and support this site with ads.
-          </p>
-          <button type="button" class="cookie-btn cookie-btn-accept" data-cookie-settings>
-            Cookie settings
-          </button>
+          <div id="gate-pending" class="gate-panel">
+            <p class="consent-gate-title">Svītrkods nav redzams</p>
+            <p class="consent-gate-text">Lai redzētu svītrkodu, lūdzu pieņemiet sīkdatnes.</p>
+            <div class="consent-gate-actions">
+              <button type="button" class="cookie-btn cookie-btn-accept" data-cookie-accept>
+                Pieņemt visas
+              </button>
+              <button type="button" class="cookie-btn cookie-btn-reject" data-cookie-settings>
+                Sīkdatņu iestatījumi
+              </button>
+            </div>
+          </div>
+          <div id="gate-declined" class="gate-panel">
+            <p class="consent-gate-title">Sīkdatnes noraidītas</p>
+            <p class="consent-gate-text">
+              Jūs noraidījāt sīkdatnes, tāpēc svītrkods nav pieejams. Lai to redzētu, pieņemiet sīkdatnes.
+            </p>
+            <div class="consent-gate-actions">
+              <button type="button" class="cookie-btn cookie-btn-accept" data-cookie-accept>
+                Pieņemt visas
+              </button>
+              <button type="button" class="cookie-btn cookie-btn-settings" data-cookie-settings>
+                Mainīt izvēli
+              </button>
+            </div>
+          </div>
         </div>
 
         <div id="barcode-content" class="barcode-content">

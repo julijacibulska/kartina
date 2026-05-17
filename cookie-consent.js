@@ -33,6 +33,13 @@
     document.documentElement.setAttribute("data-consent", level);
   }
 
+  function acceptAll() {
+    setConsent(CONSENT_ALL);
+    syncConsentState();
+    hideBanner();
+    loadAdvertisingIfConfigured();
+  }
+
   function createBanner() {
     if (document.getElementById("cookie-banner")) return;
 
@@ -91,12 +98,7 @@
     banner.appendChild(inner);
     document.body.appendChild(banner);
 
-    acceptBtn.addEventListener("click", function () {
-      setConsent(CONSENT_ALL);
-      syncConsentState();
-      hideBanner();
-      loadAdvertisingIfConfigured();
-    });
+    acceptBtn.addEventListener("click", acceptAll);
 
     rejectBtn.addEventListener("click", function () {
       setConsent(CONSENT_ESSENTIAL);
@@ -194,6 +196,13 @@
       el.addEventListener("click", function (e) {
         e.preventDefault();
         showBanner();
+      });
+    });
+
+    document.querySelectorAll("[data-cookie-accept]").forEach(function (el) {
+      el.addEventListener("click", function (e) {
+        e.preventDefault();
+        acceptAll();
       });
     });
   });
