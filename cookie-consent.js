@@ -1,11 +1,22 @@
 /**
- * GDPR / ePrivacy cookie consent for kartina.
- * Stores choice in localStorage. Advertising scripts load only after "Accept".
+ * GDPR cookie consent for kartina.
+ * Single on-page gate; barcode and ads load only after "Pieņemt visas".
  */
 (function () {
   var STORAGE_KEY = "kartina_cookie_consent";
   var CONSENT_ESSENTIAL = "essential";
   var CONSENT_ALL = "all";
+
+  var GATE_COPY = {
+    pending: {
+      title: "Svītrkods nav redzams",
+      text: "Lai redzētu svītrkodu, lūdzu pieņemiet sīkdatnes.",
+    },
+    essential: {
+      title: "Sīkdatnes noraidītas",
+      text: "Jūs noraidījāt sīkdatnes, tāpēc svītrkods nav pieejams. Lai to redzētu, pieņemiet sīkdatnes.",
+    },
+  };
 
   function getConsent() {
     try {
@@ -31,108 +42,38 @@
     var consent = getConsent();
     var level = consent === CONSENT_ALL ? "all" : consent === CONSENT_ESSENTIAL ? "essential" : "pending";
     document.documentElement.setAttribute("data-consent", level);
+    updateGateUI(level);
+  }
+
+  function updateGateUI(level) {
+    var titleEl = document.getElementById("gate-title");
+    var textEl = document.getElementById("gate-text");
+    if (!titleEl || !textEl) return;
+
+    var copy = level === "essential" ? GATE_COPY.essential : GATE_COPY.pending;
+    titleEl.textContent = copy.title;
+    textEl.textContent = copy.text;
   }
 
   function acceptAll() {
     setConsent(CONSENT_ALL);
     syncConsentState();
-    hideBanner();
     loadAdvertisingIfConfigured();
   }
 
-  function createBanner() {
-    if (document.getElementById("cookie-banner")) return;
-
-    var banner = document.createElement("div");
-    banner.id = "cookie-banner";
-    banner.className = "cookie-banner";
-    banner.setAttribute("role", "dialog");
-    banner.setAttribute("aria-label", "Sīkdatņu piekrišana");
-    banner.setAttribute("aria-live", "polite");
-
-    var inner = document.createElement("div");
-    inner.className = "cookie-banner-inner";
-
-    var p = document.createElement("p");
-    var linkCookies = document.createElement("a");
-    linkCookies.href = "cookies.html";
-    linkCookies.textContent = "Sīkdatņu politika";
-    var linkPrivacy = document.createElement("a");
-    linkPrivacy.href = "privacy.html";
-    linkPrivacy.textContent = "Privātuma politika";
-    p.appendChild(
-      document.createTextNode(
-        "Pieņemiet, lai redzētu svītrkodu un atļautu reklāmu sīkdatnes (piem., Google AdSense). Jūsu izvēli saglabājam lokāli. "
-      )
-    );
-    p.appendChild(linkCookies);
-    p.appendChild(document.createTextNode(" · "));
-    p.appendChild(linkPrivacy);
-
-    var actions = document.createElement("div");
-    actions.className = "cookie-banner-actions";
-
-    var acceptBtn = document.createElement("button");
-    acceptBtn.type = "button";
-    acceptBtn.className = "cookie-btn cookie-btn-accept";
-    acceptBtn.id = "cookie-accept";
-    acceptBtn.textContent = "Pieņemt visas";
-
-    var rejectBtn = document.createElement("button");
-    rejectBtn.type = "button";
-    rejectBtn.className = "cookie-btn cookie-btn-reject";
-    rejectBtn.id = "cookie-reject";
-    rejectBtn.textContent = "Noraidīt nebūtiskās";
-
-    var settingsBtn = document.createElement("button");
-    settingsBtn.type = "button";
-    settingsBtn.className = "cookie-btn cookie-btn-settings";
-    settingsBtn.id = "cookie-settings";
-    settingsBtn.textContent = "Mainīt izvēli";
-
-    actions.appendChild(acceptBtn);
-    actions.appendChild(rejectBtn);
-    actions.appendChild(settingsBtn);
-    inner.appendChild(p);
-    inner.appendChild(actions);
-    banner.appendChild(inner);
-    document.body.appendChild(banner);
-
-    acceptBtn.addEventListener("click", acceptAll);
-
-    rejectBtn.addEventListener("click", function () {
-      setConsent(CONSENT_ESSENTIAL);
-      syncConsentState();
-      hideBanner();
-    });
-
-    settingsBtn.addEventListener("click", function () {
-      showBanner();
-    });
+  function rejectNonEssential() {
+    setConsent(CONSENT_ESSENTIAL);
+    syncConsentState();
   }
 
-  function showBanner() {
-    if (!document.getElementById("cookie-banner")) createBanner();
-    var banner = document.getElementById("cookie-banner");
-    banner.hidden = false;
-    requestAnimationFrame(function () {
-      banner.classList.add("is-visible");
-    });
+  function changeChoice(e) {
+    if (e) e.preventDefault();
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+    } catch (err) {}
+    syncConsentState();
   }
 
-  function hideBanner() {
-    var banner = document.getElementById("cookie-banner");
-    if (!banner) return;
-    banner.classList.remove("is-visible");
-    setTimeout(function () {
-      banner.hidden = true;
-    }, 260);
-  }
-
-  /**
-   * After AdSense approval, set before this script loads:
-   * window.kartinaAdConfig = { client: "ca-pub-XXX", slot: "YYYY" };
-   */
   function loadAdvertisingIfConfigured() {
     if (!hasAdConsent()) return;
     var cfg = window.kartinaAdConfig;
@@ -171,39 +112,33 @@
   window.kartinaCookieConsent = {
     getConsent: getConsent,
     hasAdConsent: hasAdConsent,
-    showBanner: showBanner,
-    revoke: function () {
-      try {
-        localStorage.removeItem(STORAGE_KEY);
-      } catch (e) {}
-      syncConsentState();
-      showBanner();
-    },
+    changeChoice: changeChoice,
     loadAdvertisingIfConfigured: loadAdvertisingIfConfigured,
   };
 
   document.addEventListener("DOMContentLoaded", function () {
-    createBanner();
     syncConsentState();
-    var consent = getConsent();
-    if (!consent) {
-      showBanner();
-    } else if (consent === CONSENT_ALL) {
+
+    if (getConsent() === CONSENT_ALL) {
       loadAdvertisingIfConfigured();
     }
-
-    document.querySelectorAll("[data-cookie-settings]").forEach(function (el) {
-      el.addEventListener("click", function (e) {
-        e.preventDefault();
-        showBanner();
-      });
-    });
 
     document.querySelectorAll("[data-cookie-accept]").forEach(function (el) {
       el.addEventListener("click", function (e) {
         e.preventDefault();
         acceptAll();
       });
+    });
+
+    document.querySelectorAll("[data-cookie-reject]").forEach(function (el) {
+      el.addEventListener("click", function (e) {
+        e.preventDefault();
+        rejectNonEssential();
+      });
+    });
+
+    document.querySelectorAll("[data-cookie-change]").forEach(function (el) {
+      el.addEventListener("click", changeChoice);
     });
   });
 })();

@@ -30,32 +30,23 @@
     <div class="page">
       <main class="content" id="main">
         <div id="consent-gate-message" class="consent-gate-message">
-          <div id="gate-pending" class="gate-panel">
-            <p class="consent-gate-title">Svītrkods nav redzams</p>
-            <p class="consent-gate-text">Lai redzētu svītrkodu, lūdzu pieņemiet sīkdatnes.</p>
-            <div class="consent-gate-actions">
-              <button type="button" class="cookie-btn cookie-btn-accept" data-cookie-accept>
-                Pieņemt visas
-              </button>
-              <button type="button" class="cookie-btn cookie-btn-reject" data-cookie-settings>
-                Sīkdatņu iestatījumi
-              </button>
-            </div>
+          <p id="gate-title" class="consent-gate-title">Svītrkods nav redzams</p>
+          <p id="gate-text" class="consent-gate-text">
+            Lai redzētu svītrkodu, lūdzu pieņemiet sīkdatnes.
+          </p>
+          <div class="consent-gate-actions">
+            <button type="button" class="cookie-btn cookie-btn-accept" data-cookie-accept>
+              Pieņemt visas
+            </button>
+            <button type="button" class="cookie-btn cookie-btn-reject" data-cookie-reject>
+              Noraidīt nebūtiskās
+            </button>
           </div>
-          <div id="gate-declined" class="gate-panel">
-            <p class="consent-gate-title">Sīkdatnes noraidītas</p>
-            <p class="consent-gate-text">
-              Jūs noraidījāt sīkdatnes, tāpēc svītrkods nav pieejams. Lai to redzētu, pieņemiet sīkdatnes.
-            </p>
-            <div class="consent-gate-actions">
-              <button type="button" class="cookie-btn cookie-btn-accept" data-cookie-accept>
-                Pieņemt visas
-              </button>
-              <button type="button" class="cookie-btn cookie-btn-settings" data-cookie-settings>
-                Mainīt izvēli
-              </button>
-            </div>
-          </div>
+          <p class="consent-gate-links">
+            <a href="cookies.html">Sīkdatņu politika</a>
+            <span aria-hidden="true"> · </span>
+            <a href="privacy.html">Privātuma politika</a>
+          </p>
         </div>
 
         <div id="barcode-content" class="barcode-content">
@@ -88,7 +79,7 @@
         <span class="footer-sep" aria-hidden="true">·</span>
         <a href="cookies.html">Sīkdatnes</a>
         <span class="footer-sep" aria-hidden="true">·</span>
-        <a href="#" data-cookie-settings>Sīkdatņu iestatījumi</a>
+        <a href="#" data-cookie-change>Mainīt sīkdatņu izvēli</a>
       </footer>
     </div>
     <script src="cookie-consent.js" defer></script>
