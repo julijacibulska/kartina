@@ -41,8 +41,7 @@ Open http://localhost:8080 on your phone (same Wi‑Fi) or use browser dev tools
 
 ## GDPR & cookies (required before EU traffic)
 
-1. **Replace placeholder email** in `privacy.html` and `cookies.html` (`REPLACE_WITH_YOUR_EMAIL@example.com`).
-2. The site shows a **cookie banner** with equal **Accept all** / **Reject non-essential** options.
+1. The site shows a **cookie banner** with equal **Accept all** / **Reject non-essential** options.
 3. **AdSense loads only after consent** — do not add the AdSense script directly in HTML.
 4. Legal pages: `privacy.html`, `cookies.html`, footer links on all pages.
 
@@ -52,7 +51,7 @@ You do **not** have AdSense yet. After the site is live:
 
 1. **Improve thin content** (helps approval):
    - Edit the short “about” copy on the home page.
-   - Add your real contact email in `privacy.html` and `cookies.html`.
+   - Contact email is set in `privacy.html` and `cookies.html`.
 2. **Apply** at [https://www.google.com/adsense](https://www.google.com/adsense) with your live URL.
 3. **After approval**, in `index.html` uncomment and set:
 
