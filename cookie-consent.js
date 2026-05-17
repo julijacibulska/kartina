@@ -9,12 +9,12 @@
 
   var GATE_COPY = {
     pending: {
-      title: "Svītrkods nav redzams",
-      text: "Lai redzētu svītrkodu, lūdzu pieņemiet sīkdatnes.",
+      title: "Svītrkods ir aizsargāts",
+      text: "Lai skaidri redzētu svītrkodu, lūdzu pieņemiet sīkdatnes.",
     },
     essential: {
       title: "Sīkdatnes noraidītas",
-      text: "Jūs noraidījāt sīkdatnes, tāpēc svītrkods nav pieejams. Lai to redzētu, pieņemiet sīkdatnes.",
+      text: "Jūs noraidījāt sīkdatnes — svītrkods paliek aizsargāts. Lai to skaidri redzētu, pieņemiet sīkdatnes.",
     },
   };
 

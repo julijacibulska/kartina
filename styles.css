@@ -38,26 +38,52 @@ body {
   min-height: 0;
 }
 
-/* Barcode + ads only after cookie consent (see cookie-consent.js) */
-html:not([data-consent="all"]) #barcode-content,
+/* Ads only after full consent */
 html:not([data-consent="all"]) #ad-section {
   display: none !important;
 }
 
-html[data-consent="all"] #consent-gate-message {
-  display: none !important;
+.barcode-stage {
+  position: relative;
+  width: 100%;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: min(55dvh, 380px);
 }
 
-.consent-gate-message {
+/* Blur barcode until cookies accepted */
+html:not([data-consent="all"]) .barcode-stage .barcode {
+  filter: blur(14px);
+  transform: scale(1.04);
+  user-select: none;
+  pointer-events: none;
+}
+
+html:not([data-consent="all"]) .barcode-stage .hint,
+html:not([data-consent="all"]) .barcode-stage .about {
+  opacity: 0.35;
+  filter: blur(2px);
+}
+
+.consent-gate-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 2rem 1.25rem;
-  flex: 1 1 auto;
-  min-height: min(50dvh, 320px);
-  width: 100%;
+  padding: 1.25rem;
+  background: rgba(15, 15, 15, 0.72);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+
+html[data-consent="all"] .consent-gate-overlay {
+  display: none !important;
 }
 
 .consent-gate-links {
