@@ -39,21 +39,35 @@ Open http://localhost:8080 on your phone (same Wi‑Fi) or use browser dev tools
 1. Add a `CNAME` file with your domain (e.g. `www.example.com`) or configure in Pages settings.
 2. At your DNS provider, add the records GitHub shows in Pages settings.
 
+## GDPR & cookies (required before EU traffic)
+
+1. **Replace placeholder email** in `privacy.html` and `cookies.html` (`REPLACE_WITH_YOUR_EMAIL@example.com`).
+2. The site shows a **cookie banner** with equal **Accept all** / **Reject non-essential** options.
+3. **AdSense loads only after consent** — do not add the AdSense script directly in HTML.
+4. Legal pages: `privacy.html`, `cookies.html`, footer links on all pages.
+
 ## Google AdSense checklist
 
 You do **not** have AdSense yet. After the site is live:
 
 1. **Improve thin content** (helps approval):
    - Edit the short “about” copy on the home page.
-   - Add your contact email in `privacy.html`.
+   - Add your real contact email in `privacy.html` and `cookies.html`.
 2. **Apply** at [https://www.google.com/adsense](https://www.google.com/adsense) with your live URL.
-3. **After approval:**
-   - Uncomment the AdSense script in `index.html` `<head>` (replace `ca-pub-XXXXXXXX`).
-   - In `#ad-slot`, remove the `.ad-placeholder` block and uncomment the `<ins class="adsbygoogle">` snippet from AdSense (Ads → By ad unit → Display).
-   - Update `ads.txt` with your line, e.g.  
-     `google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0`
-4. **EU users:** Enable consent messaging in the AdSense dashboard (Privacy & messaging).
-5. **Test on a real phone:** barcode is large and unobstructed; ad sits below without covering the code.
+3. **After approval**, in `index.html` uncomment and set:
+
+   ```html
+   <script>
+     window.kartinaAdConfig = { client: "ca-pub-XXXXXXXX", slot: "YYYYYYYYYY" };
+   </script>
+   ```
+
+   Ads are injected by `cookie-consent.js` only when the user accepted cookies.
+
+4. Update `ads.txt` with your line, e.g.  
+   `google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0`
+5. In AdSense: enable **Privacy & messaging** (EU consent) as a backup to your banner.
+6. **Test on a real phone:** barcode unobstructed; banner works; reject = no ad cookies.
 
 ### Ad tips
 
@@ -68,7 +82,10 @@ You do **not** have AdSense yet. After the site is live:
 | `index.html` | Page layout, barcode, ad slot |
 | `styles.css` | Mobile layout |
 | `assets/barcode.svg` | Placeholder until your image is ready |
-| `privacy.html` | Required for AdSense |
+| `privacy.html` | GDPR privacy policy |
+| `cookies.html` | Cookie policy |
+| `cookie-consent.js` | Consent banner; gates AdSense |
+| `legal.css` | Legal pages + banner styles |
 | `ads.txt` | Publisher authorization for ads |
 
 ## Cost
