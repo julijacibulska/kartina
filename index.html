@@ -7,6 +7,19 @@
     <title>Barcode</title>
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="legal.css" />
+    <script>
+      (function () {
+        try {
+          var c = localStorage.getItem("kartina_cookie_consent");
+          document.documentElement.setAttribute(
+            "data-consent",
+            c === "all" ? "all" : c === "essential" ? "essential" : "pending"
+          );
+        } catch (e) {
+          document.documentElement.setAttribute("data-consent", "pending");
+        }
+      })();
+    </script>
     <!-- Phase B — After AdSense approval, set config (ads load only after cookie consent):
     <script>
       window.kartinaAdConfig = { client: "ca-pub-XXXXXXXX", slot: "YYYYYYYYYY" };
@@ -16,24 +29,36 @@
   <body>
     <div class="page">
       <main class="content" id="main">
-        <figure class="barcode-wrap">
-          <img
-            class="barcode"
-            src="assets/barcode.svg"
-            alt="Scannable barcode — replace with your image"
-            width="320"
-            height="320"
-            loading="eager"
-            decoding="async"
-          />
-        </figure>
-        <p class="hint">Scan with your phone camera</p>
-        <p class="about">
-          This page displays a scannable barcode for quick access. Point your camera at the code above.
-        </p>
+        <div id="consent-gate-message" class="consent-gate-message">
+          <p class="consent-gate-title">Barcode locked</p>
+          <p class="consent-gate-text">
+            Accept cookies to view the barcode and support this site with ads.
+          </p>
+          <button type="button" class="cookie-btn cookie-btn-accept" data-cookie-settings>
+            Cookie settings
+          </button>
+        </div>
+
+        <div id="barcode-content" class="barcode-content">
+          <figure class="barcode-wrap">
+            <img
+              class="barcode"
+              src="assets/barcode.svg"
+              alt="Scannable barcode — replace with your image"
+              width="320"
+              height="320"
+              loading="lazy"
+              decoding="async"
+            />
+          </figure>
+          <p class="hint">Scan with your phone camera</p>
+          <p class="about">
+            This page displays a scannable barcode for quick access. Point your camera at the code above.
+          </p>
+        </div>
       </main>
 
-      <aside class="ad-section" aria-label="Advertisement">
+      <aside class="ad-section" id="ad-section" aria-label="Advertisement">
         <div id="ad-slot" class="ad-slot">
           <!-- Phase B: Replace placeholder with your AdSense unit, e.g. 320×100 responsive display -->
           <!--

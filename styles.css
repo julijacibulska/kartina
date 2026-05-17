@@ -38,6 +38,54 @@ body {
   min-height: 0;
 }
 
+/* Barcode + ads only after cookie consent (see cookie-consent.js) */
+html:not([data-consent="all"]) #barcode-content,
+html:not([data-consent="all"]) #ad-section {
+  display: none !important;
+}
+
+html[data-consent="all"] #consent-gate-message {
+  display: none !important;
+}
+
+.consent-gate-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem 1.25rem;
+  flex: 1 1 auto;
+  min-height: min(50dvh, 320px);
+}
+
+.consent-gate-title {
+  margin: 0 0 0.5rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #e8e8e8;
+}
+
+.consent-gate-text {
+  margin: 0 0 1.25rem;
+  max-width: 20rem;
+  font-size: 0.875rem;
+  color: #888;
+}
+
+.consent-gate-message .cookie-btn {
+  min-width: 10rem;
+}
+
+.barcode-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
 .barcode-wrap {
   margin: 0;
   width: min(92vw, 360px);

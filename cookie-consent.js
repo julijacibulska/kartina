@@ -27,6 +27,12 @@
     return getConsent() === CONSENT_ALL;
   }
 
+  function syncConsentState() {
+    var consent = getConsent();
+    var level = consent === CONSENT_ALL ? "all" : consent === CONSENT_ESSENTIAL ? "essential" : "pending";
+    document.documentElement.setAttribute("data-consent", level);
+  }
+
   function createBanner() {
     if (document.getElementById("cookie-banner")) return;
 
@@ -49,7 +55,7 @@
     linkPrivacy.textContent = "Privacy policy";
     p.appendChild(
       document.createTextNode(
-        "We use essential storage to remember your choice. With your permission, advertising partners (e.g. Google) may use cookies for ads and measurement. "
+        "Accept to view the barcode and allow advertising cookies (e.g. Google AdSense). We store your choice locally. "
       )
     );
     p.appendChild(linkCookies);
@@ -87,12 +93,14 @@
 
     acceptBtn.addEventListener("click", function () {
       setConsent(CONSENT_ALL);
+      syncConsentState();
       hideBanner();
       loadAdvertisingIfConfigured();
     });
 
     rejectBtn.addEventListener("click", function () {
       setConsent(CONSENT_ESSENTIAL);
+      syncConsentState();
       hideBanner();
     });
 
@@ -160,6 +168,7 @@
       try {
         localStorage.removeItem(STORAGE_KEY);
       } catch (e) {}
+      syncConsentState();
       showBanner();
     },
     loadAdvertisingIfConfigured: loadAdvertisingIfConfigured,
@@ -167,6 +176,7 @@
 
   document.addEventListener("DOMContentLoaded", function () {
     createBanner();
+    syncConsentState();
     var consent = getConsent();
     if (!consent) {
       showBanner();
